@@ -1,0 +1,391 @@
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define sz(x) (ll)(x).size()
+#define trav(x) for(auto& it: x)
+#define all(x) x.begin(), x.end()
+#define stp fixed<<setprecision(20)
+#define tc ll tt; cin>>tt; while(tt--)
+#define For(i, st, en) for(ll i=st; i<en; i++)
+#define rFor(i, st, en) for(ll i=st; i>=en; i--)
+#define present(c,x) ((c).find(x) != (c).end())
+#define cpresent(c,x) (find(all(c),x) != (c).end())
+#define tr(x) for(auto it=x.begin(); it!=x.end(); it++)
+#define mtr(x) for (mii::iterator it = x.begin(); it != x.end(); ++it)
+#define fast std::ios::sync_with_stdio(false);cin.tie(NULL);
+#define printv(x) For(i, 0, sz(x)){cout<<x[i]<<" ";} cout<<endl;  
+#define print2v(x) For(i, 0, sz(x)){For(j, 0, sz(x[i])){cout<<x[i][j]<<" ";} cout<<endl;}
+#define scan2v(x,n,m) For(i, 0, n){vi tp(m,0);For(j, 0, m){cin>>tp[j];}x.pb(tp);}
+#define scanv(x,n) For(i, 0, n){cin>>tttt; x.pb(tttt);}
+#define ll long long
+#define int long long
+#define F first
+#define S second
+#define pb push_back
+#define po pop_back
+#define mp make_pair
+#define ss substr
+typedef deque<int> di;
+typedef vector<int> vi; 
+typedef pair<int, int> pii;
+typedef vector<vi> vvi;
+typedef vector<pii> vpi;
+typedef map <int, int> mii;
+typedef priority_queue <int> pq;
+#define endl '\n'   
+#define MAXN 300005
+#define MOD 1000000007  
+#define INF 1000000000000000007
+#define bitc __builtin_popcountll
+
+int begtime = clock(); ll tttt;
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+
+#define end_routine() cout << "\n\nTime elapsed: " << (double)(clock() - begtime)*1000/CLOCKS_PER_SEC << " ms\n";
+
+int compare(const void* a, const void* b){
+const int* x = (int*) a;const int* y = (int*) b;
+if (*x > *y)return 1;
+else if (*x < *y)return -1;
+return 0;}
+
+void splitx(string s, char c, vector<string> &v){
+    int i=0, j;
+    while(i<sz(s)){
+        j=i; string temp;
+        while(j<sz(s) && s[j]!=c){temp+=s[j]; j++;}
+        v.pb(temp); i=j+1; }}
+struct TreeNode { int val; TreeNode *left; TreeNode *right; 
+		TreeNode(int x) : val(x), left(NULL), right(NULL) {} };
+
+
+signed main(){
+	// Write the fuction you want to  run
+	
+	return 0;
+}
+
+Bellman_Ford(){
+	//single source shorest path
+	// If there exists a negative sum cycle the nth iteration wouldnt be same as the n-1th}}
+
+	src=0; ver; edg; vi dist(ver,INF); vvi g;vvi cost;
+
+	dist[src]=0;
+	for(int i=0;i<ver-1;i++){
+		for(int j=0;j<ver;j++){
+			for(int k=0;k<g[j].size();k++){
+
+				dist[g[j][k]]=min(dist[j]+cost[j][k]);
+			}
+		}
+	}
+	return dist;
+}
+Floyd_Warshall(){
+	// All pair shortest path
+	vvi adj; ver;
+
+	for(int i=0;i<n;i++){
+		for(int j=0;j<ver;j++){
+			for(int k=0;k<ver and j!=i;k++){
+				if(k==i)
+					continue;
+				adj[j][k]=min(adj[j][k],adj[j][i]+adj[i][k]);
+			}
+		}
+	}
+	return adj;
+}
+Dijsktra(){
+	//Single source shortest path 
+	//May not work on negative weighed cycles
+	vi dist; vvi g; vvi adj; ver; src=0;
+
+	priority_queue<pii,vpi,greater<pii> > p;
+	p.push(mp(0,src));
+	while(p.size()){
+		int x=p.top().F;
+		int y=p.top().S;
+		p.pop();
+		for(int i=0;i<g[y].size();i++){
+			if(dist[g[y][i]]>x+adj[y][g[y][i]]){
+				dist[g[y][i]]=min(dist[g[y][i]],x+adj[y][g[y][i]]);
+				p.push(mp(dist[g[y][i]],g[y][i]));
+			}
+
+		}
+	}
+	return dist;
+}
+Z_Algo(){
+	Constuction(string s){
+		int n=s.size();
+		vi Z(n);
+		int L=0,R=0;
+		for(int i=1;i<n;i++){
+			if(i>R){
+				R=L=i;
+				while(R<n and s[R-L]==s[R]){
+					R++;
+				}
+				Z[i]=R-L; // While will go one extra R
+				R--;
+			}
+			else{
+				int k=i-L;
+				if(Z[k]<R-i+1)
+					Z[i]=Z[k];
+				else{
+					L=i;
+					while(R<n and s[R-L]==s[R]){
+					R++;
+					}
+					Z[i]=R-L;
+					R--;
+				}
+			}
+		}
+		return Z;
+	}
+	Application(string a,string s){
+		string t="";
+		t= a + "$" + s;
+		return Construction(t);
+	}
+}
+Prims(){
+	//Minimum spanning tree
+	// remove self paths and parallel edges
+
+	src; ver;vvi g; vi mark(ver,0); vi dist(ver,INF); vvi cost;
+	priority_queue<pii,vpi,greater<vpi>> p;
+	dist[src]=0;
+	p.push(0,src);
+	ii=0;
+	while(p.size() and ii<ver-1){
+		int x=p.top().S;
+		p.pop();
+		for(int i=0;i<g[x].size();i++){
+			if(mark[g[x][i]]==1)
+				continue;
+			if(dist[g[x][i]]<dist[x]+cost[x][g[x][i]])
+				continue;
+			dist[g[x][i]]=dist[x]+cost[g[x][i]];
+			p.push(dist[g[x][i]],g[x][i]);
+		}
+		ii++;
+	}
+	return dist;
+}
+Kruskals(){
+	//minimum spanning tree
+	vector<pair<int,pii> > p; vi par; ver ;edge;
+	sort(all(p));
+	initialise(){
+		for(int i=0;i<ver;i++)
+			par[i]=i;
+	}
+	root(int x){
+		while(x!=par[x]){
+			x=par[par[x]];
+		}
+		return x;
+	}
+	kruskal(){
+		int ans=0;
+		for(int i=0;i<edge;i++){
+			int w=p[i].F;
+			int s=p[i].S.F;
+			int d=p[i].S.S;
+
+			int rx=root(s);
+			int ry=root(d);
+
+			if(rx!=ry){
+				ans+=w;
+				par[rx]=ry;
+			}}
+
+				return ans;
+	}
+}
+Kosaraju(){
+	vvi g;vi mark(ver,1),ver;
+	stack<int> s;
+	for(int i=0;i<ver;i++){
+		if(mark[i]==0)
+			continue;
+		stack<int> run;
+		run.push(i);
+		while(run.size()){
+			int x=run.top();
+			int temp=0
+			for(int j=0;j<g[x].size();j++)
+				if(mark[g[x][j]]){
+					temp++;
+					run.push(g[x][j]);
+					break;
+				}
+			if(temp==0){
+				s.push(x);
+				run.pop();
+			}
+			mark[x]=0;
+		}
+	}
+	vvi gg(n);
+	for(int i=0;i<n;i++){
+		for(int j=0;j<g[i].size();j++){
+			gg[g[i][j]].push_back(i);
+		}
+	}
+	vvi ans;
+	vi vis(n,0);
+	while(s.size()){
+		int x=s.top();
+		s.pop();
+		if(vis[x])
+			continue;
+		dfs(x);
+	}
+	return ans;
+}
+Detect_Cycle(){
+	vvi g; ver; vi mark(ver,0);
+	bool flag=false;
+
+	void dfs(int x){
+		mark[x]=1;
+		for(int i=0;i<g[x].size();i++){
+			if(mark[g[x][i]]==1){
+				flag=true;
+				return;
+			}
+			if(mark[g[x][i]]==0)
+				dfs(g[x][i]);
+		}
+		mark[x]=2;
+		return ;
+	}
+	cycle(){
+		for(int i=0;i<n;i++){
+			if(mark[i]==0)
+				dfs(i);
+		}
+		return flag;
+	}
+}
+Least_Common_Ancestor(){
+	TreeNode * a, *b; TreeNode* root;
+	TreeNode* LCA(TreeNode* root){
+		if(root== or root==b or root==NULL)
+			return root;
+		TreeNode* l = LCA(root->left);
+		TreeNode* r= LCA(root->right);
+		if(l==NULL and r==NULL)
+			return NULL;
+		if(l==NULL)
+			return r;
+		if(r==NULL)
+			return l;
+		return root;
+	}
+}
+Trie(){
+	struct TrieNode{
+		int end;
+		int cnt;
+		vector<TrieNode*> child(26);
+	}
+	TrieNode* get(){
+		TrieNode *t= new TrieNode;
+		t->end=0;
+		t->cnt=0;
+		for(int i=0;i<26;i++)
+			t->child[i]=NULL;
+		return t;
+	}
+	TrieNode* root=get();
+	void insert(string str){
+		int n=sz(str);
+		TrieNode* tmp=root;
+		for(int i=0;i<n;i++){
+			if(tmp->child[str[i]-'a']==NULL)
+				tmp->child[str[i]-'a']=get();
+			tmp=tmp->child[str[i]-'a'];
+			tmp->cnt++;
+		}
+		tmp->end++;
+		return ;
+	}
+	bool search(string str){
+		int n=sz(str);
+		TrieNode* tmp=root;
+		for(int i=0;i<n;i++){
+			if(tmp->child[str[i]-'a']==NULL)
+				return false;
+			tmp=tmp->child[str[i]-'a'];
+		}
+		if(tmp->end)
+			return true;
+		return false;
+	}
+	bool empty(){
+		for(int i=0;i<26;i++)
+			if(child[i])
+				return false;
+		return true;
+	}
+	void remove(string str){
+		if(!search(str))
+			return;
+		TrieNode* tmp=root;
+		for(int i=0;i<sz(str);i++){
+			tmp=tmp->child[str[i]-'a'];
+			tmp->cnt--;
+		}
+		temp->end=0;
+		return;	
+}
+Articulation_point(){
+	vvi g; vi ver; vi ans;
+	vi mark(ver,1),hi(ver,INF),lo(ver,INF);
+	int time;
+
+	void dfs(int x, int par){
+		mark[x]0;
+		lo[x]=hi[x]=time++;
+		int c=0;
+		for(int i=0;i<g[x].size();i++){
+			int y=g[x][i];
+			if(y==par)
+				continue;
+			if(mark[y]==0){
+				lo[x]=min(lo[x],lo[y]);
+			}
+			else{
+				dfs(y,x);
+				lo[x]=min(lo[x],lo[y]);
+				if(lo[y]>=hi[x]){
+					ans.pb(x);
+					c++;
+				}
+			}
+		}
+		if(par==-1 and c>1)
+			ans.pb(x);
+		return ;
+	}
+
+	void ap{
+		time=0;
+		for(int i=0;i<ver;i++)
+			if(mark[i])
+				dfs(i,-1);
+		return;
+	}
+}
+
